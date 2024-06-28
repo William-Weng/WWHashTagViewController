@@ -80,8 +80,8 @@ private extension ViewController {
         hashTagViewController = WWHashTagViewController.build()
         hashTagViewController.delegate = self
         hashTagViewController._transparent()
-             
-        myContainerView._changeContainerView(parent: self, to: hashTagViewController)
+        
+        myContainerView._changeViewController(parent: self, to: hashTagViewController)
     }
     
     /// 更新資料

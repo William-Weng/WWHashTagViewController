@@ -32,7 +32,7 @@ extension UIView {
     ///   - parentViewController: 主要的ViewController
     ///   - oldViewController: 舊的ViewController
     ///   - newViewController: 新的ViewController
-    func _changeContainerView(parent parentViewController: UIViewController, from oldViewController: UIViewController? = nil, to newViewController: UIViewController) {
+    func _changeViewController(parent parentViewController: UIViewController, from oldViewController: UIViewController? = nil, to newViewController: UIViewController) {
         
         oldViewController?.willMove(toParent: parentViewController)
         oldViewController?.view.removeFromSuperview()
