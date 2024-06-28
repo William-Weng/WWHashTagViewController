@@ -1,0 +1,67 @@
+//
+//  Extension.swift
+//  Example
+//
+//  Created by iOS on 2024/6/28.
+//
+
+import UIKit
+
+// MARK: - UIView
+extension UIView {
+    
+    /// [設定LayoutConstraint => 不能加frame](https://zonble.gitbooks.io/kkbox-ios-dev/content/autolayout/intrinsic_content_size.html)
+    /// - Parameter view: [要設定的View](https://www.appcoda.com.tw/auto-layout-programmatically/)
+    func _autolayout(on view: UIView) {
+
+        removeFromSuperview()
+        view.addSubview(self)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+}
+
+// MARK: - UIViewController
+extension UIViewController {
+    
+    /// [改變ContainerView](https://disp.cc/b/11-9XMd)
+    /// - Parameters:
+    ///   - containerView: UIView
+    ///   - oldViewController: 舊的ViewController
+    ///   - newViewController: 新的ViewController
+    func _changeContainerView(at containerView: UIView, from oldViewController: UIViewController? = nil, to newViewController: UIViewController) {
+        
+        oldViewController?.willMove(toParent: nil)
+        oldViewController?.view.removeFromSuperview()
+        oldViewController?.removeFromParent()
+        
+        addChild(newViewController)
+        newViewController.view._autolayout(on: containerView)
+        newViewController.didMove(toParent: self)
+    }
+    
+    /// 設定UIViewController透明背景 (當Alert用)
+    /// - Present Modally
+    /// - Parameter backgroundColor: 背景色
+    func _transparent(_ backgroundColor: UIColor = .clear) {
+        self._modalStyle(backgroundColor, transitionStyle: .crossDissolve, presentationStyle: .overCurrentContext)
+    }
+    
+    /// [設定UIViewController透明背景 (當Alert用)](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-view-controller-實現-ios-app-的彈出視窗-d1c78563bcde)
+    /// - Parameters:
+    ///   - backgroundColor: 背景色
+    ///   - transitionStyle: 轉場的Style
+    ///   - presentationStyle: 彈出的Style
+    func _modalStyle(_ backgroundColor: UIColor = .white, transitionStyle: UIModalTransitionStyle = .coverVertical, presentationStyle: UIModalPresentationStyle = .currentContext) {
+        self.view.backgroundColor = backgroundColor
+        self.modalPresentationStyle = presentationStyle
+        self.modalTransitionStyle = transitionStyle
+    }
+}

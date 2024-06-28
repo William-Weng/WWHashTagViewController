@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "wwhashtagviewcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWHashTagViewController",
+      "state" : {
+        "branch" : "main",
+        "revision" : "9cf15548e971fe4eb3335436b62b728b42e14798"
+      }
+    }
+  ],
+  "version" : 2
+}
