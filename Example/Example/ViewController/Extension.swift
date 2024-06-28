@@ -26,6 +26,22 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
+    
+    /// [改變ContainerView上的ViewController](https://disp.cc/b/11-9XMd)
+    /// - Parameters:
+    ///   - parentViewController: 主要的ViewController
+    ///   - oldViewController: 舊的ViewController
+    ///   - newViewController: 新的ViewController
+    func _changeContainerView(parent parentViewController: UIViewController, from oldViewController: UIViewController? = nil, to newViewController: UIViewController) {
+        
+        oldViewController?.willMove(toParent: parentViewController)
+        oldViewController?.view.removeFromSuperview()
+        oldViewController?.removeFromParent()
+        
+        parentViewController.addChild(newViewController)
+        newViewController.view._autolayout(on: self)
+        newViewController.didMove(toParent: parentViewController)
+    }
 }
 
 // MARK: - UIViewController
@@ -38,7 +54,7 @@ extension UIViewController {
     ///   - newViewController: 新的ViewController
     func _changeContainerView(at containerView: UIView, from oldViewController: UIViewController? = nil, to newViewController: UIViewController) {
         
-        oldViewController?.willMove(toParent: nil)
+        oldViewController?.willMove(toParent: self)
         oldViewController?.view.removeFromSuperview()
         oldViewController?.removeFromParent()
         

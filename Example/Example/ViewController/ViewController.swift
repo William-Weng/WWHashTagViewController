@@ -27,7 +27,7 @@ final class ViewController: UIViewController {
         initSetting()
     }
     
-    @IBAction func refreash(_ sender: UIBarButtonItem) {
+    @IBAction func refresh(_ sender: UIBarButtonItem) {
         refreashAction()
     }
         
@@ -74,13 +74,14 @@ private extension ViewController {
     /// 初始化設定
     func initSetting() {
         
+        heightConstraint.constant = 0
+        count = 3
+        
         hashTagViewController = WWHashTagViewController.build()
         hashTagViewController.delegate = self
         hashTagViewController._transparent()
-        
-        heightConstraint.constant = 0
-        count = 3
-        self._changeContainerView(at: myContainerView, from: nil, to: hashTagViewController)
+             
+        myContainerView._changeContainerView(parent: self, to: hashTagViewController)
     }
     
     /// 更新資料

@@ -100,16 +100,17 @@ private extension ViewController {
     
     func initSetting() {
         
+        heightConstraint.constant = 0
+        count = 3
+        
         hashTagViewController = WWHashTagViewController.build()
         hashTagViewController.delegate = self
         hashTagViewController._transparent()
-        
-        heightConstraint.constant = 0
-        count = 3
-        self._changeContainerView(at: myContainerView, from: nil, to: hashTagViewController)
+             
+        myContainerView._changeContainerView(parent: self, to: hashTagViewController)
     }
     
-    func refreashAction() {
+    func refreshAction() {
         productName = (productName == "iPhone") ? "iPad" : "iPhone"
         count = count * 2
         hashTagViewController.reloadData()
