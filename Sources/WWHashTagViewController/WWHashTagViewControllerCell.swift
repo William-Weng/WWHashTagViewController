@@ -10,13 +10,15 @@ import UIKit
 // MARK: - WWHashTagViewControllerCell
 public class WWHashTagViewControllerCell: UICollectionViewCell, CellReusable {
     
+    typealias Settings = (title: String?, font: UIFont?, textColor: WWHashTagViewController.ColorInformation?, backgroundColor: WWHashTagViewController.ColorInformation?)
+    
     var indexPath: IndexPath = []
     
     @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    static let cellColor: WWHashTagViewController.ColorInformation = (selected: .red, unselected: .lightGray)
-    static let textColor: WWHashTagViewController.ColorInformation = (selected: .white, unselected: .black)
+    static let defaultBackgroundColor: WWHashTagViewController.ColorInformation = (selected: .red, unselected: .lightGray)
+    static let defaultTextColor: WWHashTagViewController.ColorInformation = (selected: .white, unselected: .black)
     
     static var titles: [String?]? = []
     static var selectedItems: Set<IndexPath> = []
@@ -24,24 +26,23 @@ public class WWHashTagViewControllerCell: UICollectionViewCell, CellReusable {
     /// 相關設定
     /// - Parameters:
     ///   - indexPath: IndexPath
-    ///   - title: String?
-    ///   - font: UIFont
-    func configure(with indexPath: IndexPath, title: String?, font: UIFont?) {
-        
+    ///   - settings: Settings
+    func configure(with indexPath: IndexPath, settings: Settings) {
+
         self.indexPath = indexPath
         
         titleView.layoutIfNeeded()
         titleView.layer._maskedCorners(radius: titleView.frame.height * 0.5)
-        titleLabel.text = title
+        titleLabel.text = settings.title
         
-        if let font = font { titleLabel.font = font }
+        if let font = settings.font { titleLabel.font = font }
         
         if (Self.selectedItems.contains(indexPath)) {
-            titleView.backgroundColor = Self.cellColor.selected
-            titleLabel.textColor = Self.textColor.selected
+            titleView.backgroundColor = settings.backgroundColor?.selected ?? Self.defaultBackgroundColor.selected
+            titleLabel.textColor = settings.textColor?.selected ?? Self.defaultTextColor.selected
         } else {
-            titleView.backgroundColor = Self.cellColor.unselected
-            titleLabel.textColor = Self.textColor.unselected
+            titleView.backgroundColor = settings.backgroundColor?.unselected ?? Self.defaultBackgroundColor.unselected
+            titleLabel.textColor = settings.textColor?.unselected ?? Self.defaultTextColor.unselected
         }
     }
 }

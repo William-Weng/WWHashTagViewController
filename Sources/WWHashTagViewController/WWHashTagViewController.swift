@@ -138,10 +138,9 @@ private extension WWHashTagViewController {
     func cellMaker(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> WWHashTagViewControllerCell {
         
         let cell = collectionView._reusableCell(at: indexPath) as WWHashTagViewControllerCell
-        let title = delegate?.title(self, with: indexPath)
-        let font = delegate?.font(self, with: indexPath)
-
-        cell.configure(with: indexPath, title: title, font: font)
+        let settings = cellSettinsMaker(delegate: delegate, forIndex: indexPath)
+        
+        cell.configure(with: indexPath, settings: settings)
         
         return cell
     }
@@ -164,13 +163,23 @@ private extension WWHashTagViewController {
             WWHashTagViewControllerCell.selectedItems.insert(indexPath)
         }
         
-        if (WWHashTagViewControllerCell.selectedItems.contains(indexPath)) {
-            cell.titleView.backgroundColor = WWHashTagViewControllerCell.cellColor.selected
-            cell.titleLabel.textColor = WWHashTagViewControllerCell.textColor.selected
-        } else {
-            cell.titleView.backgroundColor = WWHashTagViewControllerCell.cellColor.unselected
-            cell.titleLabel.textColor = WWHashTagViewControllerCell.textColor.unselected
-        }
+        let settings = cellSettinsMaker(delegate: delegate, forIndex: indexPath)
+        cell.configure(with: indexPath, settings: settings)
+    }
+    
+    /// 產生Settings設定檔
+    /// - Parameters:
+    ///   - delegate: WWHashTagViewControllerDelegate?
+    ///   - indexPath: IndexPath
+    /// - Returns: WWHashTagViewControllerCell.Settings
+    func cellSettinsMaker(delegate: WWHashTagViewControllerDelegate?, forIndex indexPath: IndexPath) -> WWHashTagViewControllerCell.Settings {
+        
+        let title = delegate?.title(self, with: indexPath)
+        let font = delegate?.font(self, with: indexPath)
+        let backgroundColor = delegate?.hashTagViewController(self, didSelectItemBackgroundColorAt: indexPath)
+        let textColor = delegate?.hashTagViewController(self, didSelectItemTextColorAt: indexPath)
+                
+        return (title, font, textColor, backgroundColor)
     }
     
     /// deinit後要做的事

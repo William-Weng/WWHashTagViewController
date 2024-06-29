@@ -41,9 +41,8 @@ protocol CellReusable: AnyObject {
     /// Cell的相關設定
     /// - Parameters:
     ///   - indexPath: IndexPath
-    ///   - title: String?
-    ///   - font: UIFont
-    func configure(with indexPath: IndexPath, title: String?, font: UIFont?)
+    ///   - settings: WWHashTagViewControllerCell.Settings
+    func configure(with indexPath: IndexPath, settings: WWHashTagViewControllerCell.Settings)
 }
 
 // MARK: - 預設 identifier = class name (初值)
