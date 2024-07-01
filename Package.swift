@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "WWHashTagViewController", targets: ["WWHashTagViewController"]),
     ],
     targets: [
-        .target(name: "WWHashTagViewController", resources: [.process("Storyboard")]),
+        .target(name: "WWHashTagViewController", resources: [.process("Storyboard"), .copy("Privacy")]),
     ],
     swiftLanguageVersions: [
         .v5
