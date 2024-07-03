@@ -53,8 +53,6 @@ public extension WWHashTagViewController {
     
     /// 重新讀取Items
     func reloadData() {
-        WWHashTagViewControllerCell.titles = []
-        WWHashTagViewControllerCell.selectedItems = []
         myCollectionView?.reloadData()
     }
 }
@@ -138,9 +136,10 @@ private extension WWHashTagViewController {
     func cellMaker(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> WWHashTagViewControllerCell {
         
         let cell = collectionView._reusableCell(at: indexPath) as WWHashTagViewControllerCell
-        let settings = cellSettinsMaker(delegate: delegate, forIndex: indexPath)
-        
-        cell.configure(with: indexPath, settings: settings)
+                
+        if let view = delegate?.hashTagViewController(self, viewForItemAt: indexPath) {
+            view._autolayout(on: cell)
+        }
         
         return cell
     }
@@ -152,39 +151,17 @@ private extension WWHashTagViewController {
     func cellSetting(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         defer {
-            delegate?.hashTagViewController(self, didSelectItemAt: indexPath, forItems: WWHashTagViewControllerCell.selectedItems)
+            delegate?.hashTagViewController(self, collectionView: collectionView, didSelectItemAt: indexPath)
         }
         
         guard let cell = collectionView.cellForItem(at: indexPath) as? WWHashTagViewControllerCell else { return }
-        
-        if (WWHashTagViewControllerCell.selectedItems.contains(indexPath)) {
-            WWHashTagViewControllerCell.selectedItems.remove(indexPath)
-        } else {
-            WWHashTagViewControllerCell.selectedItems.insert(indexPath)
-        }
-        
-        let settings = cellSettinsMaker(delegate: delegate, forIndex: indexPath)
-        cell.configure(with: indexPath, settings: settings)
+        cell.configure(with: indexPath)
     }
-    
-    /// 產生Settings設定檔
-    /// - Parameters:
-    ///   - delegate: WWHashTagViewControllerDelegate?
-    ///   - indexPath: IndexPath
-    /// - Returns: WWHashTagViewControllerCell.Settings
-    func cellSettinsMaker(delegate: WWHashTagViewControllerDelegate?, forIndex indexPath: IndexPath) -> WWHashTagViewControllerCell.Settings {
         
-        let title = delegate?.title(self, with: indexPath)
-        let font = delegate?.font(self, with: indexPath)
-        let backgroundColor = delegate?.hashTagViewController(self, didSelectItemBackgroundColorAt: indexPath)
-        let textColor = delegate?.hashTagViewController(self, didSelectItemTextColorAt: indexPath)
-                
-        return (title, font, textColor, backgroundColor)
-    }
-    
     /// deinit後要做的事
     func deinitAction() {
-        WWHashTagViewControllerCell.selectedItems = []
         myCollectionView._removeDelegateAndDataSource()
     }
 }
+
+

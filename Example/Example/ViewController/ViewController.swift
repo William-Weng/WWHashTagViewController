@@ -20,6 +20,7 @@ final class ViewController: UIViewController {
     private var isOn = false
     private var count = 0
     private var productName = "iPhone"
+    private var selectedItems: Set<IndexPath> = []
     private var hashTagViewController: WWHashTagViewController!
     
     override func viewDidLoad() {
@@ -28,7 +29,7 @@ final class ViewController: UIViewController {
     }
     
     @IBAction func refresh(_ sender: UIBarButtonItem) {
-        refreashAction()
+        refreshAction()
     }
         
     @IBAction func changeConstraint(_ sender: UIBarButtonItem) {
@@ -43,28 +44,27 @@ extension ViewController: WWHashTagViewControllerDelegate {
         return count
     }
     
-    func title(_ hashTagViewController: WWHashTagViewController, with indexPath: IndexPath) -> String? {
-        return "\(productName) \(indexPath.row)"
-    }
-    
-    func font(_ hashTagViewController: WWHashTagViewController, with indexPath: IndexPath) -> UIFont {
-        return .systemFont(ofSize: 16, weight: .bold)
-    }
-    
     func layoutType(_ hashTagViewController: WWHashTagViewController) -> WWHashTagViewController.CollectionViewLayoutType {
         return .default(type: .vertical(count: 3), itemHeight: 56, minimumLineSpacing: 5)
     }
     
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemBackgroundColorAt indexPath: IndexPath) -> WWHashTagViewController.ColorInformation {
-        return (selected: .red, unselected: .lightText)
+    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, viewForItemAt indexPath: IndexPath) -> UIView {
+        
+        let cellView = CellView(frame: .zero)
+        cellViewSetting(cellView, indexPath: indexPath)
+        
+        return cellView
     }
     
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemTextColorAt indexPath: IndexPath) -> WWHashTagViewController.ColorInformation {
-        return (selected: .white, unselected: .black)
-    }
-    
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemAt indexPath: IndexPath, forItems items: Set<IndexPath>) {
-        myLabel.text = "\(productName) \(indexPath.row)"
+    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? WWHashTagViewControllerCell,
+              let cellView = cell.subviews.last as? CellView
+        else {
+            return
+        }
+        
+        cellViewAction(cellView, indexPath: indexPath)
     }
 }
 
@@ -85,7 +85,7 @@ private extension ViewController {
     }
     
     /// 更新資料
-    func refreashAction() {
+    func refreshAction() {
         productName = (productName == "iPhone") ? "iPad" : "iPhone"
         count = count * 2
         hashTagViewController.reloadData()
@@ -106,9 +106,45 @@ private extension ViewController {
         }
         
         isOn.toggle()
-        if (!isOn) { count = 0; heightConstraint.constant = 0; return }
+        if (!isOn) { count = 0; heightConstraint.constant = 0; selectedItems = []; return }
         
         count = 5
         heightConstraint.constant = height
+    }
+    
+    /// 產生自定義View的時候使用
+    /// - Parameters:
+    ///   - cellView: CellView
+    ///   - indexPath: IndexPath
+    func cellViewSetting(_ cellView: CellView, indexPath: IndexPath) {
+        
+        cellView.myLabel.text = "\(indexPath.row)"
+        
+        if (selectedItems.contains(indexPath)) {
+            cellView.contentView.backgroundColor = .red
+            cellView.myLabel.textColor = .white
+        } else {
+            cellView.contentView.backgroundColor = .systemGray3
+            cellView.myLabel.textColor = .black
+        }
+    }
+    
+    /// 改變自定義畫面相關設定
+    /// - Parameters:
+    ///   - cellView: CellView
+    ///   - indexPath: IndexPath
+    func cellViewAction(_ cellView: CellView, indexPath: IndexPath) {
+        
+        cellView.myLabel.text = "\(indexPath.row)"
+        
+        if (!selectedItems.contains(indexPath)) {
+            selectedItems.insert(indexPath)
+            cellView.contentView.backgroundColor = .red
+            cellView.myLabel.textColor = .white
+        } else {
+            selectedItems.remove(indexPath)
+            cellView.contentView.backgroundColor = .systemGray3
+            cellView.myLabel.textColor = .black
+        }
     }
 }

@@ -13,9 +13,12 @@
 		3DBCD87D26F198F300522E3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87C26F198F300522E3B /* Assets.xcassets */; };
 		3DBCD88026F198F300522E3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87E26F198F300522E3B /* LaunchScreen.storyboard */; };
 		8130039027D5D18100436128 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8130038F27D5D18100436128 /* Constant.swift */; };
+		815318832C34E97500C4050C /* WWHashTagViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 815318822C34E97500C4050C /* WWHashTagViewController */; };
+		815318852C34EC7000C4050C /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815318842C34EC7000C4050C /* CellView.swift */; };
+		815318872C34EC7700C4050C /* CellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 815318862C34EC7700C4050C /* CellView.xib */; };
 		81A253742C2E879C0089EF81 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A253732C2E879C0089EF81 /* Extension.swift */; };
 		81B5190B2C2E90DF0004D50B /* WWHashTagViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81B5190A2C2E90DF0004D50B /* WWHashTagViewController */; };
-		81E09BC92C2EAF58002704C0 /* WWHashTagViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81E09BC82C2EAF58002704C0 /* WWHashTagViewController */; };
+		81F9AC832C35465B0093577E /* WWHashTagViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81F9AC822C35465B0093577E /* WWHashTagViewController */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,8 @@
 		3DBCD87F26F198F300522E3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3DBCD88126F198F300522E3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8130038F27D5D18100436128 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		815318842C34EC7000C4050C /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
+		815318862C34EC7700C4050C /* CellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CellView.xib; sourceTree = "<group>"; };
 		81A253732C2E879C0089EF81 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -35,7 +40,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E09BC92C2EAF58002704C0 /* WWHashTagViewController in Frameworks */,
+				815318832C34E97500C4050C /* WWHashTagViewController in Frameworks */,
+				81F9AC832C35465B0093577E /* WWHashTagViewController in Frameworks */,
 				81B5190B2C2E90DF0004D50B /* WWHashTagViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,6 +82,8 @@
 		3DBCD88726F1992200522E3B /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				815318842C34EC7000C4050C /* CellView.swift */,
+				815318862C34EC7700C4050C /* CellView.xib */,
 				81A253732C2E879C0089EF81 /* Extension.swift */,
 				3DBCD87726F198EF00522E3B /* ViewController.swift */,
 			);
@@ -140,7 +148,8 @@
 			name = Example;
 			packageProductDependencies = (
 				81B5190A2C2E90DF0004D50B /* WWHashTagViewController */,
-				81E09BC82C2EAF58002704C0 /* WWHashTagViewController */,
+				815318822C34E97500C4050C /* WWHashTagViewController */,
+				81F9AC822C35465B0093577E /* WWHashTagViewController */,
 			);
 			productName = Example;
 			productReference = 3DBCD87026F198EF00522E3B /* Example.app */;
@@ -171,7 +180,7 @@
 			);
 			mainGroup = 3DBCD86726F198EF00522E3B;
 			packageReferences = (
-				81E09BC72C2EAF58002704C0 /* XCRemoteSwiftPackageReference "WWHashTagViewController" */,
+				81F9AC812C35465B0093577E /* XCRemoteSwiftPackageReference "WWHashTagViewController" */,
 			);
 			productRefGroup = 3DBCD87126F198EF00522E3B /* Products */;
 			projectDirPath = "";
@@ -187,6 +196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815318872C34EC7700C4050C /* CellView.xib in Resources */,
 				3DBCD88026F198F300522E3B /* LaunchScreen.storyboard in Resources */,
 				3DBCD87D26F198F300522E3B /* Assets.xcassets in Resources */,
 				3DBCD87B26F198EF00522E3B /* Main.storyboard in Resources */,
@@ -201,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DBCD87826F198EF00522E3B /* ViewController.swift in Sources */,
+				815318852C34EC7000C4050C /* CellView.swift in Sources */,
 				3DBCD87426F198EF00522E3B /* AppDelegate.swift in Sources */,
 				8130039027D5D18100436128 /* Constant.swift in Sources */,
 				81A253742C2E879C0089EF81 /* Extension.swift in Sources */,
@@ -415,24 +426,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		81E09BC72C2EAF58002704C0 /* XCRemoteSwiftPackageReference "WWHashTagViewController" */ = {
+		81F9AC812C35465B0093577E /* XCRemoteSwiftPackageReference "WWHashTagViewController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWHashTagViewController";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		815318822C34E97500C4050C /* WWHashTagViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWHashTagViewController;
+		};
 		81B5190A2C2E90DF0004D50B /* WWHashTagViewController */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWHashTagViewController;
 		};
-		81E09BC82C2EAF58002704C0 /* WWHashTagViewController */ = {
+		81F9AC822C35465B0093577E /* WWHashTagViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 81E09BC72C2EAF58002704C0 /* XCRemoteSwiftPackageReference "WWHashTagViewController" */;
+			package = 81F9AC812C35465B0093577E /* XCRemoteSwiftPackageReference "WWHashTagViewController" */;
 			productName = WWHashTagViewController;
 		};
 /* End XCSwiftPackageProductDependency section */

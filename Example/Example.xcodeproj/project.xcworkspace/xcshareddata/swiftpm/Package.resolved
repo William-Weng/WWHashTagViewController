@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHashTagViewController",
       "state" : {
-        "revision" : "dbf9ef33918840451a995bc562a2d44d27fc3eb4",
-        "version" : "1.0.1"
+        "revision" : "93643be60b5f1a23d8af1ca3eeb28f1a996d4502",
+        "version" : "1.0.3"
       }
     }
   ],

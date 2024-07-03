@@ -7,6 +7,36 @@
 
 import UIKit
 
+// MARK: - Collection (function)
+extension Collection where Self.Element: UIView {
+        
+    /// 將所有View移除
+    func _removeFromSuperview() {
+        self.forEach { $0.removeFromSuperview() }
+    }
+}
+
+// MARK: - UIView (function)
+extension UIView {
+    
+    /// [設定LayoutConstraint => 不能加frame](https://zonble.gitbooks.io/kkbox-ios-dev/content/autolayout/intrinsic_content_size.html)
+    /// - Parameter view: [要設定的View](https://www.appcoda.com.tw/auto-layout-programmatically/)
+    func _autolayout(on view: UIView) {
+
+        removeFromSuperview()
+        view.addSubview(self)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+}
+
 // MARK: - UIStoryboard (static function)
 extension UIStoryboard {
     
@@ -59,19 +89,3 @@ extension UICollectionView {
     /// - Parameter cellClass: 符合CellReusable的Cell
     func _registerCell<T: CellReusable>(with cellClass: T.Type) { register(cellClass.self, forCellWithReuseIdentifier: cellClass.identifier) }
 }
-
-extension CALayer {
-    
-    /// [設定圓角](https://www.appcoda.com.tw/calayer-introduction/)
-    /// - [可以個別設定要哪幾個角 / 預設是四個角全是圓角](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓-view-變圓角的-layer-cornerradius-54aa7afda2a1)
-    /// - Parameters:
-    ///   - radius: 圓的半徑
-    ///   - masksToBounds: Bool
-    ///   - corners: 圓角要哪幾個邊
-    func _maskedCorners(radius: CGFloat, masksToBounds: Bool = true, corners: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]) {
-        self.masksToBounds = masksToBounds
-        self.maskedCorners = corners
-        self.cornerRadius = radius
-    }
-}
-

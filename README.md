@@ -11,7 +11,7 @@
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 ```
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWHashTagViewController.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/William-Weng/WWHashTagViewController.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -26,12 +26,9 @@ dependencies: [
 |函式|功能|
 |-|-|
 |number(_:)|Item的數量|
-|title(_:)|顯示的標題|
-|font(_:with:)|標題字型|
 |layoutType(_:)|Layout的方式|
-|hashTagViewController(_:didSelectItemBackgroundColorAt:)|Item背景色|
-|hashTagViewController(_:didSelectItemTextColorAt:)|文字顏色|
-|hashTagViewController(_:didSelectItemAt:forItems:)|被點到時的反應|
+|hashTagViewController(_:viewForItemAt:)|產生要加上Cell上的自訂View|
+|hashTagViewController(_:collectionView:didSelectItemAt:)|被點到時的反應|
 
 ## Example
 ```swift
@@ -49,15 +46,16 @@ final class ViewController: UIViewController {
     private var isOn = false
     private var count = 0
     private var productName = "iPhone"
+    private var selectedItems: Set<IndexPath> = []
     private var hashTagViewController: WWHashTagViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
     }
-        
-    @IBAction func refreash(_ sender: UIBarButtonItem) {
-        refreashAction()
+    
+    @IBAction func refresh(_ sender: UIBarButtonItem) {
+        refreshAction()
     }
         
     @IBAction func changeConstraint(_ sender: UIBarButtonItem) {
@@ -71,28 +69,27 @@ extension ViewController: WWHashTagViewControllerDelegate {
         return count
     }
     
-    func title(_ hashTagViewController: WWHashTagViewController, with indexPath: IndexPath) -> String? {
-        return "\(productName) \(indexPath.row)"
-    }
-    
-    func font(_ hashTagViewController: WWHashTagViewController, with indexPath: IndexPath) -> UIFont {
-        return .systemFont(ofSize: 16, weight: .bold)
-    }
-    
     func layoutType(_ hashTagViewController: WWHashTagViewController) -> WWHashTagViewController.CollectionViewLayoutType {
         return .default(type: .vertical(count: 3), itemHeight: 56, minimumLineSpacing: 5)
     }
     
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemBackgroundColorAt indexPath: IndexPath) -> WWHashTagViewController.ColorInformation {
-        return (selected: .red, unselected: .lightText)
+    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, viewForItemAt indexPath: IndexPath) -> UIView {
+        
+        let cellView = CellView(frame: .zero)
+        cellViewSetting(cellView, indexPath: indexPath)
+        
+        return cellView
     }
     
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemTextColorAt indexPath: IndexPath) -> WWHashTagViewController.ColorInformation {
-        return (selected: .white, unselected: .black)
-    }
-    
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemAt indexPath: IndexPath, forItems items: Set<IndexPath>) {
-        myLabel.text = "\(productName) \(indexPath.row)"
+    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? WWHashTagViewControllerCell,
+              let cellView = cell.subviews.last as? CellView
+        else {
+            return
+        }
+        
+        cellViewAction(cellView, indexPath: indexPath)
     }
 }
 
@@ -106,11 +103,11 @@ private extension ViewController {
         hashTagViewController = WWHashTagViewController.build()
         hashTagViewController.delegate = self
         hashTagViewController._transparent()
-             
-        myContainerView._changeContainerView(parent: self, to: hashTagViewController)
+        
+        myContainerView._changeViewController(parent: self, to: hashTagViewController)
     }
     
-    func refreshAction() {
+    func refreashAction() {
         productName = (productName == "iPhone") ? "iPad" : "iPhone"
         count = count * 2
         hashTagViewController.reloadData()
@@ -134,6 +131,34 @@ private extension ViewController {
         
         count = 5
         heightConstraint.constant = height
+    }
+    
+    func cellViewSetting(_ cellView: CellView, indexPath: IndexPath) {
+        
+        cellView.myLabel.text = "\(indexPath.row)"
+        
+        if (selectedItems.contains(indexPath)) {
+            cellView.contentView.backgroundColor = .red
+            cellView.myLabel.textColor = .white
+        } else {
+            cellView.contentView.backgroundColor = .systemGray3
+            cellView.myLabel.textColor = .black
+        }
+    }
+    
+    func cellViewAction(_ cellView: CellView, indexPath: IndexPath) {
+        
+        cellView.myLabel.text = "\(indexPath.row)"
+        
+        if (!selectedItems.contains(indexPath)) {
+            selectedItems.insert(indexPath)
+            cellView.contentView.backgroundColor = .red
+            cellView.myLabel.textColor = .white
+        } else {
+            selectedItems.remove(indexPath)
+            cellView.contentView.backgroundColor = .systemGray3
+            cellView.myLabel.textColor = .black
+        }
     }
 }
 ```

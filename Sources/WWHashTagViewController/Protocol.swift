@@ -13,23 +13,14 @@ public protocol WWHashTagViewControllerDelegate: AnyObject {
     /// Item的數量
     func number(_ hashTagViewController: WWHashTagViewController) -> Int
     
-    /// 顯示的標題
-    func title(_ hashTagViewController: WWHashTagViewController, with indexPath: IndexPath) -> String?
-
-    /// 標題字型
-    func font(_ hashTagViewController: WWHashTagViewController, with indexPath: IndexPath) -> UIFont
-    
     /// Layout的方式 (預設 / 自訂)
     func layoutType(_ hashTagViewController: WWHashTagViewController) -> WWHashTagViewController.CollectionViewLayoutType
     
-    /// Item背景色
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemBackgroundColorAt indexPath: IndexPath) -> WWHashTagViewController.ColorInformation
-    
-    /// 文字顏色
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemTextColorAt indexPath: IndexPath) -> WWHashTagViewController.ColorInformation
+    /// 產生要加上Cell上的自訂View
+    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, viewForItemAt indexPath: IndexPath) -> UIView
     
     /// 被點到時的反應
-    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, didSelectItemAt indexPath: IndexPath, forItems items: Set<IndexPath>)
+    func hashTagViewController(_ hashTagViewController: WWHashTagViewController, collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 }
 
 // MARK: - 可重複使用的Cell (UITableViewCell / UICollectionViewCell)
@@ -41,8 +32,7 @@ protocol CellReusable: AnyObject {
     /// Cell的相關設定
     /// - Parameters:
     ///   - indexPath: IndexPath
-    ///   - settings: WWHashTagViewControllerCell.Settings
-    func configure(with indexPath: IndexPath, settings: WWHashTagViewControllerCell.Settings)
+    func configure(with indexPath: IndexPath)
 }
 
 // MARK: - 預設 identifier = class name (初值)

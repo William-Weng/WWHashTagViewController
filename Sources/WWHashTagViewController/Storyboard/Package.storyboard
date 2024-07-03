@@ -34,35 +34,8 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aqX-x5-dXO">
                                             <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1CD-Sd-W1g">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whb-8W-MUV">
-                                                            <rect key="frame" x="43" y="53.666666666666657" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstItem="whb-8W-MUV" firstAttribute="centerX" secondItem="1CD-Sd-W1g" secondAttribute="centerX" id="CKM-c9-bVh"/>
-                                                        <constraint firstItem="whb-8W-MUV" firstAttribute="centerY" secondItem="1CD-Sd-W1g" secondAttribute="centerY" id="D3b-Qh-MJL"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="1CD-Sd-W1g" secondAttribute="trailing" id="OBg-Ed-2RL"/>
-                                                <constraint firstItem="1CD-Sd-W1g" firstAttribute="leading" secondItem="aqX-x5-dXO" secondAttribute="leading" id="iFm-a1-Tea"/>
-                                                <constraint firstItem="1CD-Sd-W1g" firstAttribute="top" secondItem="aqX-x5-dXO" secondAttribute="top" id="pIJ-sM-JBL"/>
-                                                <constraint firstAttribute="bottom" secondItem="1CD-Sd-W1g" secondAttribute="bottom" id="rSY-dx-gm4"/>
-                                            </constraints>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </collectionViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="whb-8W-MUV" id="8EM-VM-HWU"/>
-                                            <outlet property="titleView" destination="1CD-Sd-W1g" id="8eG-5O-Kri"/>
-                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
